@@ -32,12 +32,20 @@ func readLines(path string) ([]string, error) {
 	return lines, scanner.Err()
 }
 
-func welcome() {
+func welcome(username string) {
+	fmt.Println("    Hello " + username + "!")
 	fmt.Println(`
 	Welcome to the easy crypto tutorial, section 1
 	The rules for this part are simple:`)
 	rules()
-	//TODO if terminal too small say to enlarge it
+	fmt.Println(`
+	To play the game it is suggested to use a terminal
+	of horizontal size greater than 75 characters and
+	horizontal size greater than 50.
+	To check your current size run "stty size" in the
+	shell prompt.
+	`)
+
 	fmt.Println(`
 			HAVE FUN!
 			`)
@@ -75,7 +83,14 @@ func riddleMe(cur_level level) bool { // title string, charset string, encrypt f
 	for i := 0; i < MAX_ATTEMPTS; i++ {
 		fmt.Printf("Attempts left: %d\n", MAX_ATTEMPTS-i)
 		fmt.Print("?> ")
-		answ := cur_level.encrypt(strings.TrimSpace(readConsole()))
+		input := strings.TrimSpace(readConsole())
+		if input == "H" {
+			fmt.Println("The hint is: ")
+			fmt.Println(cur_level.hint)
+			i--
+			continue
+		}
+		answ := cur_level.encrypt(input)
 		if answ == currentLine {
 			fmt.Println("Well done!\n")
 			return true
@@ -98,6 +113,7 @@ type level struct {
 var levels = []level{
 	{"level0, actually not a level at all", easier.PRINTABLE_ASCII, "Just give me back what i want, be my echo", nil},
 	{"level1, easy as eating a salad!", easier.PRINTABLE_ASCII, "More precisely: a Caesar salad", nil},
+	{"level2, harder, but it is still a classic one.", easier.PRINTABLE_ASCII, "try typing in the alphabet, or 5 times the same character", nil},
 }
 
 //To understand this see Closures in golang
@@ -118,18 +134,17 @@ func levelGenerator(index int) func(string) string {
 		for i, v := range perm {
 			subs[v] = rune(easier.PRINTABLE_ASCII[i])
 		}
-		subsstute_alpha := string(subs)
+		substiute_alpha := string(subs)
 		return func(toencode string) string {
-			return easier.Substitute(toencode, easier.PRINTABLE_ASCII, subsstute_alpha)
+			return easier.Substitute(toencode, easier.PRINTABLE_ASCII, substiute_alpha)
 		}
 	}
 	return nil
 }
-
 func Play(username string) {
 	rand.Seed(time.Now().Unix())
 	lines, _ = readLines(PATH)
-	welcome()
+	welcome(username)
 	console = bufio.NewReader(os.Stdin)
 	for index, level := range levels {
 		level.encrypt = levelGenerator(index)
@@ -139,4 +154,6 @@ func Play(username string) {
 	}
 }
 func main() {
+	//TODO implement login
+	Play("default")
 }

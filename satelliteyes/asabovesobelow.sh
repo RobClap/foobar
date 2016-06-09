@@ -1,4 +1,4 @@
-#On macosx depends on https://github.com/victor/whereami
+#On macosx depends on https://github.com/victor/whereami TODO use airport instead http://osxdaily.com/2012/02/28/find-scan-wireless-networks-from-the-command-line-in-mac-os-x/
 #On linux depends on nmcli
 #Optional dependecy imagemagick
 

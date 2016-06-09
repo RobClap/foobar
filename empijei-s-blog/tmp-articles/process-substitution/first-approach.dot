@@ -1,0 +1,16 @@
+digraph Pipe{
+	rankdir=LR;
+	Grep1[label="Grep on file\nRemove empty lines"];
+	Tee
+	Grep2[label="Grep \nTake only comments"]
+	CommentFile[label="File with\nComments"];
+	Grep3[label="Grep \nTake only non-comments"]
+	ActiveFile[label="File with\nnon-comments"];
+
+edge [label="pipe"]
+	Grep1->Tee
+	Tee->Grep2
+	Tee->Grep3
+	Grep2->CommentFile
+	Grep3->ActiveFile
+}

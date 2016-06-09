@@ -1,0 +1,1 @@
+alias §="| while read line "

@@ -7,5 +7,5 @@
 		grep -Eo "[0-9]+\.[0-9]{7},?" | 
 		tr -d '\n'
 )&zoom=15&scale=2&size=640x360" > ~/as_above_so_below.png 
-osascript -e 'tell application "Finder" to set desktop picture to POSIX file "~/as_above_so_below.png"'
+osascript -e 'tell application "Finder" to set desktop picture to POSIX file "'"$HOME"'~/as_above_so_below.png"'
 

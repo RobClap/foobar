@@ -1,0 +1,59 @@
+networksetup -setairportpower airport on
+/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s
+
+| awk '{print "\&wifi=mac:" $3 "|ssid:" $1 "|ss:" $1}' | tr -d '\n' | sed 's/-\([0-9]{2}\)/\1/g'
+
+
+cat tmp-wifi.txt | grep -Eo "[^ ].* ..:..:..:..:..:.. -[0-9]{2}" | awk '{print "\&wifi=mac:" $(NF-1) "|ssid:" $(NF-2) "|ss:" $NF}'
+
+networksetup -setairportpower airport on 
+
+
+whereami () {
+2> /dev/null curl "https://maps.googleapis.com/maps/api/browserlocation/json?browser=firefox&key=AIzaSyDBgL8fm9bD8RLShATOLI1xKmFcZ4ieMkM&sensor=true" --data-urlencode "$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s | grep -Eo "[^ ].* ..:..:..:..:..:.. -[0-9]{2}" | awk '{printf "&wifi=mac:%s|ssid:",$(NF-1); for(i=1;i<NF-2;i++){printf "%s ", $i}; printf "%s|ss:%s",$(NF-2),substr( $NF, 2, 3)}')" | grep -Eo "[0-9]+\.[0-9]{7},?" | tr -d '\n'
+}
+
+
+
+
+
+
+
+
+                            SSID BSSID             RSSI CHANNEL HT CC SECURITY (auth/unicast/group)
+                      CPR-NeatoR 36:18:1a:7a:6d:23 -71  48      Y  IT WPA(PSK/AES,TKIP/TKIP) WPA2(PSK/AES,TKIP/TKIP) 
+             Copernico Free Wifi 3a:18:1a:7a:6d:23 -71  48      Y  IT NONE
+            wireless.halldis.com 16:18:1a:7a:6d:23 -71  48      Y  IT NONE
+            Copernico Enterprise 02:18:1a:7a:6d:23 -71  48      Y  IT NONE
+             Copernico Free Wifi 3a:18:1a:fd:a2:f0 -71  44      Y  IT NONE
+            wireless.halldis.com 16:18:1a:fd:a2:f0 -71  44      Y  IT NONE
+            Copernico Enterprise 02:18:1a:fd:a2:f0 -71  44      Y  IT NONE
+             Copernico Free Wifi 3a:18:1a:fe:f1:90 -53  40      Y  IT NONE
+            wireless.halldis.com 16:18:1a:fe:f1:90 -53  40      Y  IT NONE
+            Copernico Enterprise 02:18:1a:fe:f1:90 -53  40      Y  IT NONE
+             Copernico Free Wifi 3a:18:1a:7a:6b:b5 -69  36      Y  IT NONE
+            wireless.halldis.com 16:18:1a:7a:6b:b5 -69  36      Y  IT NONE
+            Copernico Enterprise 02:18:1a:7a:6b:b5 -69  36      Y  IT NONE
+            Copernico Enterprise 00:18:0a:fe:f1:40 -74  11      Y  IT NONE
+                 Network di Crea 80:ea:96:eb:cd:e4 -78  11      Y  IT WPA2(PSK/AES/AES) 
+                           Caleb 30:91:8f:95:69:59 -82  11      Y  -- WPA(PSK/TKIP/TKIP) WPA2(PSK/AES/TKIP) 
+             Copernico Free Wifi 3a:18:0a:fe:f1:40 -75  11      Y  IT NONE
+            wireless.halldis.com 16:18:0a:fe:f1:40 -74  11      Y  IT NONE
+                         SawHost ec:1a:59:44:5a:f1 -72  9       Y  TW WPA(PSK/AES/AES) WPA2(PSK/AES/AES) 
+                       saw2.4GHz ec:1a:59:44:5a:f0 -73  9       Y  TW WPA(PSK/AES/AES) WPA2(PSK/AES/AES) 
+ HP-Print-65-Officejet Pro 251dw 88:51:fb:1e:02:65 -86  6       N  -- NONE
+            Copernico Enterprise 00:18:0a:7a:6b:b5 -79  6       Y  IT NONE
+             Copernico Free Wifi 3a:18:0a:7a:6d:23 -68  6       Y  IT NONE
+                      CPR-NeatoR 36:18:0a:7a:6d:23 -68  6       Y  IT WPA(PSK/AES,TKIP/TKIP) WPA2(PSK/AES,TKIP/TKIP) 
+            wireless.halldis.com 16:18:0a:7a:6b:b5 -79  6       Y  IT NONE
+            wireless.halldis.com 16:18:0a:7a:6d:23 -68  6       Y  IT NONE
+            Copernico Enterprise 00:18:0a:7a:6d:23 -68  6       Y  IT NONE
+          DIRECT-iDPopcorn Maker 32:cd:a7:9e:f7:08 -59  6       N  -- WPA2(PSK/AES/AES) 
+                       Bing Bong 00:22:3f:32:7a:12 -54  6       N  -- WPA(PSK/TKIP/TKIP) 
+                       WIFI-C6B3 a4:c7:de:94:86:98 -79  1       Y  US WPA(PSK/AES,TKIP/TKIP) WPA2(PSK/AES,TKIP/TKIP) 
+             Copernico Free Wifi 3a:18:0a:fe:f1:90 -57  1       Y  IT NONE
+            wireless.halldis.com 16:18:0a:fe:f1:90 -57  1       Y  IT NONE
+             Copernico Free Wifi 3a:18:0a:fd:a2:f0 -67  1       Y  IT NONE
+            wireless.halldis.com 16:18:0a:fd:a2:f0 -67  1       Y  IT NONE
+            Copernico Enterprise 00:18:0a:fe:f1:90 -56  1       Y  IT NONE
+            Copernico Enterprise 00:18:0a:fd:a2:f0 -67  1       Y  IT NONE

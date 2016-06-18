@@ -1,0 +1,4 @@
+articolo su main attenction points of go:
+1) chiamate su metodi by ref o by copy implicite e ignote
+2) slice che modificano gli array sottostanti, anche out of bound
+3) closures che non tengono il valore della variabile di range

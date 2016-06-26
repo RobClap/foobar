@@ -94,6 +94,7 @@ d:  426f6fd41d8cd98f004204e9800998ecf8427e,
 d1: 426f6fd41d8cd98f004242424242424242424242, d2: 4204e9800998ecf8427e
 */
 ```
+//TODO tell about full slice expression
 
 IMHO this can be dangerous and you all gopher out there should always watch out for the type of the data you are handling.
 

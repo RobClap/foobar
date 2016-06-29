@@ -1,0 +1,12 @@
+digraph {
+init -> main;
+main -> printf;
+main -> scanf;
+main -> stampa;
+stampa -> system;
+stampa -> printf;
+main -> getchar;
+main -> scegli;
+scegli -> caso;
+main -> check;
+}

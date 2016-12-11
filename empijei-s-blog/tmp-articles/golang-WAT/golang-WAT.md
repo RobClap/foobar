@@ -167,7 +167,7 @@ main{
 	wg
 	for{
 	i
-		{
+		for body{
 			go closure
 		}
 	}
@@ -195,6 +195,33 @@ func main() {
 }
 ```
 If you don't trust me you can read this in [Effective Go](https://golang.org/doc/effective_go.html#channels)
+## What the actual scheduler?
+TODO
+Goroutines are so cool. They behave like threads, but come at almost no cost. The scheduler does not rely on the underlying operative system but it is implemented as calls to a scheduler function on the following operations:
+ * go statements
+ * blocking channels operations
+ * blocking system calls
+ * lock operations
+ * non inlined function calls (sometimes)
+
+There is a big downside in all this. Take a look at the following code and try to guess how long does it keep running:
+```go
+func main() {
+	go func() {
+		for {
+		}
+	}()
+	time.Sleep(2 * time.Second)
+	fmt.Println("Done")
+}
+```
+if you have a multicore processor to run the experiment use
+```sh
+GOMAXPROCS=1 go run main.go
+```
+(There is a way to obtain the same effect on multicore processors, it just makes the core more complex.)
+
+So, if you tried the code above you realized it never stops running. This means that an endless computation which is not making calls to the scheduler (aka performing one of the operations listed above) could potentially prevent any other goroutine from executing.
 
 # TL;DR
 Go is a very powerful tool and using it without knowing it can cause big headaches.
